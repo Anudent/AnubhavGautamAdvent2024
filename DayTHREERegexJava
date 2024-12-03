@@ -5,7 +5,7 @@ import.java.util.regex.Matcher;
 import java.util.*;
 
 import java.util.regex.Pattern;.java.
-public class DayTWORegexJava {
+public class DayTHREERegexJava {
     public static void main(String[] args) {
 
 
