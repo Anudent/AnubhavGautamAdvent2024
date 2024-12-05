@@ -32,7 +32,7 @@ public class DayFOURWordSearch {
         int correctSequence = 1;      //will check if this variable matches the length of the target string at the end
         int direction = -1;   //checking "downwards" first
 
-        if(rowLocation + searchTarget.length() < data.length() ) {
+        if(rowLocation + searchTarget.length() < data.length ) {
             for (int i = 1; i < searchTarget.length(); i++) { //checking for each letter in search target and tracking using a for loop
                 String selectedLetter = data[rowLocation + (direction * i)][columnLocation];  //multiplying directions by the number of iterations to accurately locate the next letter
                 String targetLetter = searchTarget.substring(i, i + 1);
@@ -60,11 +60,11 @@ public class DayFOURWordSearch {
     public int checkHorizontally(int rowLocation, int columnLocation){    //returns at most 2, at least 0
         int occurences =0; // OUTPUT
         int correctSequence = 1;      //will check if this variable matches the length of the target string at the end
-        int direction = -1;   //checking "downwards" first
+        int direction = -1;   //checking "left" first
 
-        if(rowLocation + searchTarget.length() < data.length() ) {
+        if(columnLocation + searchTarget.length() < data[0].length ) {
             for (int i = 1; i < searchTarget.length(); i++) { //checking for each letter in search target and tracking using a for loop
-                String selectedLetter = data[rowLocation + (direction * i)][columnLocation];  //multiplying directions by the number of iterations to accurately locate the next letter
+                String selectedLetter = data[rowLocation ][columnLocation + (direction * i)];  //multiplying directions by the number of iterations to accurately locate the next letter
                 String targetLetter = searchTarget.substring(i, i + 1);
                 if (selectedLetter.equals(targetLetter)) correctSequence++;      //adding to the sum of correctness
             }
@@ -74,9 +74,9 @@ public class DayFOURWordSearch {
 
         direction = 1; //switching directions, to the other direction  "upwards"
 
-        if(rowLocation >= searchTarget.length()){      //checking if searching upwards is suitable: compares the string length to current location
+        if(columnLocation >= data[0].length){      //checking if searching upwards is suitable: compares the string length to current location
             for(int i = 1; i< searchTarget.length(); i++ ){
-                String selectedLetter = data[rowLocation + (direction*i) ][columnLocation];       //multiplying directions by the iteriation index to travel the other direction
+                String selectedLetter = data[rowLocation][columnLocation + (direction * i)];       //multiplying directions by the iteriation index to travel the other direction
                 String targetLetter = searchTarget.substring(i,i+1);
                 if(selectedLetter.equals(targetLetter)) correctSequence++;               //adding to the sum of correctness
             }
@@ -85,7 +85,7 @@ public class DayFOURWordSearch {
 
         return occurences;
     }
-    }
+
     public int checkDiagonally(int rowLocation, int columnLocation){       //returns at most 4, at least 0
 
     }
