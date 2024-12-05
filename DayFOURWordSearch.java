@@ -28,15 +28,63 @@ public class DayFOURWordSearch {
 
 
     public int checkVertically(int rowLocation, int columnLocation){    //returns at most 2, at least 0
-        if(rowLocation < searchTarget.length()){
-            for(int i = rowLocation; i< "XMAS".length(); i++){
-                if(data[rowLocation-1][columnLocation].equals("M"))
+       int occurences =0; // OUTPUT
+        int correctSequence = 1;      //will check if this variable matches the length of the target string at the end
+        int direction = -1;   //checking "downwards" first
+
+        if(rowLocation + searchTarget.length() < data.length() ) {
+            for (int i = 1; i < searchTarget.length(); i++) { //checking for each letter in search target and tracking using a for loop
+                String selectedLetter = data[rowLocation + (direction * i)][columnLocation];  //multiplying directions by the number of iterations to accurately locate the next letter
+                String targetLetter = searchTarget.substring(i, i + 1);
+                if (selectedLetter.equals(targetLetter)) correctSequence++;      //adding to the sum of correctness
             }
+            if (correctSequence == searchTarget.length() ) occurences++;    //verifiying conditions
+            correctSequence = 0;            //resetting variable
         }
 
-    }
-    public int checkHorizontally(int rowLocation, int columnLocation){    //returns at most 2, at least 0
+        direction = 1; //switching directions, to the other direction  "upwards"
 
+        if(rowLocation >= searchTarget.length()){      //checking if searching upwards is suitable: compares the string length to current location
+            for(int i = 1; i< searchTarget.length(); i++ ){
+                String selectedLetter = data[rowLocation + (direction*i) ][columnLocation];       //multiplying directions by the iteriation index to travel the other direction
+                String targetLetter = searchTarget.substring(i,i+1);
+                if(selectedLetter.equals(targetLetter)) correctSequence++;               //adding to the sum of correctness
+            }
+            if(correctSequence == searchTarget.length() )) occurences++;
+        }
+
+        return occurences;
+    }
+
+
+    public int checkHorizontally(int rowLocation, int columnLocation){    //returns at most 2, at least 0
+        int occurences =0; // OUTPUT
+        int correctSequence = 1;      //will check if this variable matches the length of the target string at the end
+        int direction = -1;   //checking "downwards" first
+
+        if(rowLocation + searchTarget.length() < data.length() ) {
+            for (int i = 1; i < searchTarget.length(); i++) { //checking for each letter in search target and tracking using a for loop
+                String selectedLetter = data[rowLocation + (direction * i)][columnLocation];  //multiplying directions by the number of iterations to accurately locate the next letter
+                String targetLetter = searchTarget.substring(i, i + 1);
+                if (selectedLetter.equals(targetLetter)) correctSequence++;      //adding to the sum of correctness
+            }
+            if (correctSequence == searchTarget.length() ) occurences++;    //verifiying conditions
+            correctSequence = 0;            //resetting variable
+        }
+
+        direction = 1; //switching directions, to the other direction  "upwards"
+
+        if(rowLocation >= searchTarget.length()){      //checking if searching upwards is suitable: compares the string length to current location
+            for(int i = 1; i< searchTarget.length(); i++ ){
+                String selectedLetter = data[rowLocation + (direction*i) ][columnLocation];       //multiplying directions by the iteriation index to travel the other direction
+                String targetLetter = searchTarget.substring(i,i+1);
+                if(selectedLetter.equals(targetLetter)) correctSequence++;               //adding to the sum of correctness
+            }
+            if(correctSequence == searchTarget.length() )) occurences++;
+        }
+
+        return occurences;
+    }
     }
     public int checkDiagonally(int rowLocation, int columnLocation){       //returns at most 4, at least 0
 
