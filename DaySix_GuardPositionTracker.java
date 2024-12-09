@@ -1,38 +1,42 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.security.Guard;
 import java.util.*;
 public class DayFive_PositionTracker {
+
+    public String[][] data = getFileData(file);    //write file name
+    public int total = 1;
+    public int guardXCoord = findGuardLocation(data)[0];      //specific cooordinate variables
+    public int guardYCoord = findGuardLocation(data)[1];
+    public int horizontalDirection = 0;    //does not start left nor right   -1: left     1: right
+    public int verticalDirection = 1;     //starts up, -1: down 1:right
+
+
     public static void main(String[] args) {
-        String[][] data = getFileData(file);    //write file name
-        int total = 1;
-        int[] guardCoord = findGuardLocation(data);
-
-
 
 
 
     }
 
-    /*
-    recursive method
+    public boolean canMoveforward(){   //method that returns a boolean test case and changes directions accordingly
 
-    public static moveForward(int[] guardLocation){
-        while
+        if(verticalDirection != 0 && horizontalDirection == 0 ) {
+            if (!data[guardXCoord][guardYCoord + verticalDirection].equals("#")) {
+                //move up
+                guardYCoord += verticalDirection;
+                total++;
+            } else {
+                horizontalDirection = verticalDirection;
+                verticalDirection = 0;
+            }
+        } //need "|"  and "out of bounds"
 
-    }
-    */
-    public static boolean canMoveforward(int[] coordinates, String direction ){
-        int x = coordinates[0];
-        int y = coordinates[1];
-
-        switch(direction)
-            case'n'
-                break;
-            case's'
-                break;
+        if(!data[guardXCoord +horizontalDirection][guardYCoord].equals("#")) {
+            if (horizontalDirection != 0 && verticalDirection == 0) {
+                guardXCoord += horizontalDirection;
+                total++;
+            }
         }
-        if(data[x][y+1].equals("#") ) return false;
-        else return true;
     }
 
     public static int[] moveGuard(int[]coordinates, boolean canMoveForward(int[] coordinates)){
