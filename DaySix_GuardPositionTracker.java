@@ -20,6 +20,10 @@ public class DayFive_PositionTracker {
 
     public boolean canMoveforward(){   //method that returns a boolean test case and changes directions accordingly
 
+        boolean condition =  !data[guardXCoord][guardYCoord + verticalDirection].equals("#");
+        condition = condition || !data[guardXCoord][guardYCoord + verticalDirection].equals("|");
+        condition = condition || data.length < guardYCoord;
+
         if(verticalDirection != 0 && horizontalDirection == 0 ) {
             if (!data[guardXCoord][guardYCoord + verticalDirection].equals("#")) {
                 //move up
