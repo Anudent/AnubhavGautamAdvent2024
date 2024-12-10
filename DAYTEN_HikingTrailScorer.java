@@ -22,6 +22,8 @@ public class DAYTEN_HikingTrailScorer {
         if(currentNumber == 0) {
             if(y-1 > 0) evaluateTrails(x, y+1, currentNumber);
             if(y+1 < data.length) evaluateTrails(x);
+            if(x-1 > 0) evaluateTrails(x-1, y, currentNumber);
+            if(x+1 < data[0].length ) evaluateTrails(x+1, y, currentNumber);
 
         }
 
