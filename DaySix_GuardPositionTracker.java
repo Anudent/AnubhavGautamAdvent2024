@@ -1,39 +1,47 @@
+import javax.net.ssl.HostnameVerifier;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.Guard;
 import java.util.*;
 public class DayFive_PositionTracker {
 
-    public String[][] data = getFileData(file);    //write file name
-    public int total = 1;
-    public int guardXCoord = findGuardLocation(data)[0];      //specific cooordinate variables
-    public int guardYCoord = findGuardLocation(data)[1];
-    public int horizontalDirection = 0;    //does not start left nor right   -1: left     1: right
-    public int verticalDirection = 1;     //starts up, -1: down 1:right
+   public String[][] data = getFileData(file);    //write file name
+    public static int total = 1;
+    public static ArrayList<int[]> visitedCoordinates = new ArrayList<int[]>();
+    visitedCoordinates.add(findGuardLocation(data));
+
+    public static int guardXCoord = findGuardLocation(data)[0];      //specific cooordinate variables
+    public static int guardYCoord = findGuardLocation(data)[1];
+
+    public static int horizontalDirection = 0;    //does not start left nor right   -1: left     1: right
+    public static int verticalDirection = 1;     //starts up, -1: down 1:right
 
 
     public static void main(String[] args) {
-
-
+        visitedCoordinates.push(findGuardLocation(data))
 
     }
 
     public boolean canMoveforward(){   //method that returns a boolean test case and changes directions accordingly
 
-        boolean condition =  !data[guardXCoord][guardYCoord + verticalDirection].equals("#");
-        condition = condition || !data[guardXCoord + horizontalDirection][guardYCoord ].equals("#");
-        condition = condition || !data[guardXCoord + horizontalDirection][guardYCoord ].equals("|");
-        condition = condition || data.length < guardYCoord;
+        boolean condition =  !data[guardYCoord +verticalDirection ][guardXCoord + horizontalDirection].equals("#");  //checking every direction
+        condition = condition || !data[guardYCoord +verticalDirection ][guardXCoord + horizontalDirection].equals("#");
+        condition = condition || !data[guardYCoord +verticalDirection ][guardXCoord + horizontalDirection].equals("|");
+        condition = condition || ( data.length > guardYCoord +verticalDirection || 0 < guardYCoord +verticalDirection);
 
-        if(verticalDirection != 0 && horizontalDirection == 0 ) {
-            if (!data[guardXCoord][guardYCoord + verticalDirection].equals("#")) {
-                //move up
-                guardYCoord += verticalDirection;
-                total++;
-            } else {
-                horizontalDirection = verticalDirection;
-                verticalDirection = 0;
-            }
+        if(condition ) {               //if it is a valid move, move the guard by the appropriate left and right direction
+            guardYCoord += verticalDirection;
+            guardXCoord += horizontalDirection;
+            total++;
+            int[] newGuardLocation = {guardYCoord, guardXCoord};
+            visitedCoordinates.add(newGuardLocation);
+        }
+        else {
+            int tempVar = verticalDirection;
+            verticalDirection = -1 * horizontalDirection;
+            horizontalDirection = -1 * verticalDirection;
+
+        }
         } //need "|"  and "out of bounds"
 
         if(!data[guardXCoord +horizontalDirection][guardYCoord].equals("#")) {
