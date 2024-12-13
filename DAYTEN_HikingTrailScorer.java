@@ -62,17 +62,26 @@ public class DAYTEN_HikingTrailScorer {
 
 
 
-    public int evaluateTrail(int[] coordinates){
+    public boolean evaluateTrailDirections(int[] coordinates){
         //int totalTrailScore = 0;
-        int x = startX;
-        int y = startY;
+        int x = coordinates[1];
+        int y = coordinates[0];
+        int total = 0;
         int currentNumber = data[y][x];
         if(currentNumber != 9) {
-            if(y-1 > 0) evaluateTrails(x, y-1);
-            if(y+1 < data.length) evaluateTrails(x, y+1);
-            if(x-1 > 0) evaluateTrails(x-1, y);
-            if(x+1 < data[0].length ) evaluateTrails(x+1, y);
-
+            if(y-1 > 0 && data[y-1][x] == currentNumber + 1 ) {
+                total += evaluateTrailDirections({y-1, x});
+            }
+            if( (y+1 < data.length-1 ) && data[y-1][x] == currentNumber + 1 ) evaluateTrails(x, y+1){
+                total += evaluateTrailDirections({})
+            }
+            if(x-1 > 1) evaluateTrails(x-1, y);
+            if( (x+1 < data[0].length - 1) && && data[y-1][x] == currentNumber + 1 ){
+                total += evaluateTrailDirections()
+            }
+        }
+        else if( currentNumber >= 9){
+            return 1;
         }
     }
 
