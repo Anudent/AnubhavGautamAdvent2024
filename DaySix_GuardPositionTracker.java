@@ -1,6 +1,7 @@
 import javax.net.ssl.HostnameVerifier;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.security.Guard;
 import java.util.*;
 public class DaySix_GuardPositionTracker {
@@ -8,55 +9,65 @@ public class DaySix_GuardPositionTracker {
    public String[][] data = getFileData(file);    //write file name
     public static int total = 1;
     public static ArrayList<int[]> visitedCoordinates = new ArrayList<int[]>();
-    visitedCoordinates.add(findGuardLocation(data));
+    visitedCoordinates.add(findGuardLocation(data));       //adding to visited coordinates list
 
     public static int guardXCoord = findGuardLocation(data)[0];      //specific cooordinate variables
     public static int guardYCoord = findGuardLocation(data)[1];
 
     public static int horizontalDirection = 0;    //does not start left nor right   -1: left     1: right
-    public static int verticalDirection = 1;     //starts up, -1: down 1:right
+    public static int verticalDirection = 1;     //starts up, -1: down 1
 
 
     public static void main(String[] args) {
-        visitedCoordinates.push(findGuardLocation(data))
-
+        while(canMoveforward()){
+        }
+        System.out.println
     }
 
-    public boolean canMoveforward(){   //method that returns a boolean test case and changes directions accordingly
+    public static boolean canMoveforward(){   //method that returns a boolean true if the guard moved forward
+        //  false if the guard moves off the boundaries
+        //  the program changes the guards directions accordingly and adds to the total
 
-        boolean condition =  !data[guardYCoord +verticalDirection ][guardXCoord + horizontalDirection].equals("#");  //checking every direction
-        condition = condition || !data[guardYCoord +verticalDirection ][guardXCoord + horizontalDirection].equals("#");
-        condition = condition || !data[guardYCoord +verticalDirection ][guardXCoord + horizontalDirection].equals("|");
-        condition = condition || ( data.length > guardYCoord +verticalDirection || 0 < guardYCoord +verticalDirection);
+        boolean condition =  !data[guardYCoord + verticalDirection ][guardXCoord + horizontalDirection].equals("#");    //if next move isn't an obstacle
+        condition = condition || !data[guardYCoord +verticalDirection ][guardXCoord + horizontalDirection].equals("|"); //if next move isnt a wall
+        condition = condition || (data.length > guardYCoord +verticalDirection && 0 < guardYCoord +verticalDirection);  //if next move isn't outside boundaries
 
-        if(condition ) {               //if it is a valid move, move the guard by the appropriate left and right direction
+        if(condition) {               //if it is a valid move, move the guard by the appropriate left and right direction
             guardYCoord += verticalDirection;
             guardXCoord += horizontalDirection;
+            if(isLocationDistinct()) {
+                int[] newGuardLocation = {guardYCoord, guardXCoord};
+                visitedCoordinates.add(newGuardLocation);
+                total++;
+            }
+
+            int tempVar = verticalDirection;               //turning 90 degrees right algorithm
+            verticalDirection = -1 * horizontalDirection;
+            horizontalDirection = tempVar;
+
+            return condition;            //returning true
+        }
+
+        else if (!(data.length > guardYCoord + verticalDirection && 0 < guardYCoord + verticalDirection)) {  //return false to end the calculations
             total++;
             int[] newGuardLocation = {guardYCoord, guardXCoord};
             visitedCoordinates.add(newGuardLocation);
+            return condition;
         }
-        else {
-            int tempVar = verticalDirection;
-            verticalDirection = -1 * horizontalDirection;
-            horizontalDirection = -1 * verticalDirection;
+        return true;
+    }
 
-        }
-        } //need "|"  and "out of bounds"
 
-        if(!data[guardXCoord +horizontalDirection][guardYCoord].equals("#")) {
-            if (horizontalDirection != 0 && verticalDirection == 0) {
-                guardXCoord += horizontalDirection;
+    public static boolean isLocationDistinct(int[] coordinates, ArrayList<int[]> currentLocationList){
+        for(int[] pair : currentLocationList){
+            if(coordinates[0] == pair[0] && coordinates[1] == pair[1] ) {
                 total++;
-            }
+                visitedCoordinates.add(coordinates)   //do the if statement block in this method
+            };
         }
+        return true;
     }
 
-    public static int[] moveGuard(int[]coordinates, boolean canMoveForward(int[] coordinates)){
-
-    }
-
-    public static void rotate
 
     public static int[] findGuardLocation(String[][] input ){     //returns an array of two ints symbolizing a coordinate pair
         int[] output = new int[2];
