@@ -3,7 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.Guard;
 import java.util.*;
-public class DayFive_PositionTracker {
+public class DaySix_GuardPositionTracker {
 
    public String[][] data = getFileData(file);    //write file name
     public static int total = 1;
