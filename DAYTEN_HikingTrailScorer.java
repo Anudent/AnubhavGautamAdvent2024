@@ -5,8 +5,9 @@ import java.util.Scanner;
 
 public class DAYTEN_HikingTrailScorer {
 
+
     // turns filedata Array into a 2d list
-    public int[][] formatFileData(ArrayList<String> fileData){
+    public static int[][] formatFileData(ArrayList<String> fileData){
         int[][] output = new int[fileData.get(0).length()][fileData.size()];   //intializing list to the dimensions of the string's length and the array's size
         for(int eachRow = 0; eachRow < fileData.size(); eachRow++){    //extracting every value in every line
             String line = fileData.get(eachRow);
@@ -36,12 +37,12 @@ public class DAYTEN_HikingTrailScorer {
     }
 
     //returns all coordinates in the data array that start with 0  in int[] pair
-    public Array<int> locateAllZeroCoords(String[][] input) {
+    public static Array<int[]> locateAllZeroCoords(String[][] input) {
         Array<int[]> allCoords = new Array<int[]>();
         for (int everyRow = 0; everyRow < input.length; everyRow++) {
             for (int everyColumn = 0; everyColumn < input[0].length; everyColumn++) {
                 if (input[everyRow][everyColumn] == 0) {
-                    int[] currentCoord = {everyColumn, everyRow};
+                    int[] currentCoord = {everyRow, everyColumn};
                     allCoords.push(currentCoord);
                 }
             }
@@ -49,26 +50,40 @@ public class DAYTEN_HikingTrailScorer {
         return allCoords;
     }
 
-    public int[][] data = formatFileData(getFileData(file));
-    public Array<int[]> zeroCoordinates = locateAllOneXCoords(data);
-    public int answer = processAll(zeroCoordinates, data):
+    public int[][] data = formatFileData(getFileData("src/file"));
+
+    
+    public static FINAL int[] UP = {1,0};
+    public static FINAL int[] DOWN = {0,0};
+    public static FINAL int[] LEFT = {0,0};
+    public static FINAL int[] RIGHT = {0,1};
+    public static FINAL int[][] DIRECTIONS = {UP, DOWN, LEFT, RIGHT};
 
     public static void main(String[] args){
-
-
-        system.out.println(answer)
+        
+        Array<int[]> zeroCoordinates = locateAllZeroCoords(data);
+        int answer = processAll(zeroCoordinates, data);
+        
+        system.out.println(answer);
 
     }
 
 
 
-    public boolean evaluateTrailDirections(int[] coordinates){
-        //int totalTrailScore = 0;
+    public int evaluateTrailDirections(int[] coordinates, int[] direction  ){
         int x = coordinates[1];
         int y = coordinates[0];
+        int horizontalDirection = direction[1];
+        int verticalDirection = direction[0];
         int total = 0;
         int currentNumber = data[y][x];
+        
         if(currentNumber != 9) {
+            if( inBoundsAndMoveable(coordinates, direction) {
+                
+            } 
+            
+            
             if(y-1 > 0 && data[y-1][x] == currentNumber + 1 ) {
                 total += evaluateTrailDirections({y-1, x});
             }
@@ -83,6 +98,19 @@ public class DAYTEN_HikingTrailScorer {
         else if( currentNumber >= 9){
             return 1;
         }
+    }
+
+    public boolean inBoundsAndMoveable(int[] coordinates, int[] direction) {
+        int x = coordinates[1];
+        int y = coordinates[0];
+        int horizontalDirection = direction[1];
+        int verticalDirection = direction[0];
+        boolean condition = ( 0 < x + horizontalDirection && x + horizontalDirection < data[0].length );
+        boolean condition = condition && ( 0 < y + verticalDirection && y + verticalDirection < data[0].length );
+        if(condition) {
+            condition = condition && data[y+ verticalDirection][ x+horizontalDirection ];
+        }
+        return condition;
     }
 
     public int processAll(ArrayList<int[]> zeros, int[][] data){
