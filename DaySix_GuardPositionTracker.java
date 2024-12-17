@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 public class DaySix_GuardPositionTracker {
 
-    public static String[][] data = formatFileData(getFileData(fileData)) ;    //write file name
+    public static String[][] data = formatFileData(getFileData("src/fileData.txt")) ;    //write file name
     public static int total = 1;
     public static ArrayList<int[]> visitedCoordinates = new ArrayList<>();
 
@@ -19,17 +19,19 @@ public class DaySix_GuardPositionTracker {
         while (canMoveForward()) {
             moveForward();
         }
-        System.out.println("The Guard is out of sight after visiting " + total + " distinct places. ");                          // the loop will end when the guard is off the fileData fileData
+        System.out.println("The Guard is out of sight after visiting " + total + " distinct places. ");                          // the loop will end when the guard is off the fileData.txt fileData.txt
     }
 
     public static boolean canMoveForward() {   //method that returns a boolean true if the guard moved forward
         //  false if the guard moves off the boundaries
         //  the program changes the guards directions accordingly and adds to the total
 
-        boolean condition = !data[guardYCoord + verticalDirection][guardXCoord + horizontalDirection].equals("#");    //if next move isn't an obstacle
-        condition = condition || !data[guardYCoord + verticalDirection][guardXCoord + horizontalDirection].equals("|"); //if next move isnt a wall
-        condition = condition || (data.length > guardYCoord + verticalDirection && 0 < guardYCoord + verticalDirection);  //if next move isn't outside boundaries
-
+        boolean condition = (data.length > guardYCoord + verticalDirection && 0 < guardYCoord + verticalDirection);  //if next move isn't outside boundaries vertically
+        condition = condition || (data[0].length > guardXCoord + horizontalDirection && 0 < guardXCoord + horizontalDirection);    //if next move isn't outside boundaries horizontally
+        if(condition) {       //to prevent OutOfBoundsError, outOfBounds must be checked first.
+            condition = condition || !data[guardYCoord + verticalDirection][guardXCoord + horizontalDirection].equals("|"); //if next move isnt a wall
+            condition = condition || !data[guardYCoord + verticalDirection][guardXCoord + horizontalDirection].equals("#");    //if next move isn't an obstacle
+        }
         return condition;
     }
 
@@ -66,10 +68,13 @@ public class DaySix_GuardPositionTracker {
 
 
     public static int[] findGuardLocation(String[][] input ){     //returns an array of two ints symbolizing a coordinate pair
-        int[] output = new int[2];
+        int[] output = new int[] { 0, 0 };
         for(int r = 0; r < input.length; r++) {
             for(int c =0; c < input[0].length; c++){
-                if( input[r][c].equals("^") ) output[0] = r; output[1] = c;
+                if( input[r][c].equals("^") ) {
+                    output[0] = r;
+                    output[1] = c;
+                }
             }
         }
         return output;
