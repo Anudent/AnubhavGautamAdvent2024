@@ -16,8 +16,6 @@ public class DAY18_FallingBytesMazeSolution {
 
     public static void simulateFallingBytes(){}
 
-    public static void
-
     // turns filedata Array into a 2d list
     public static String[][] formatFileData(ArrayList<String> fileData){
         String[][] output = new String[fileData.get(0).length()][fileData.size()];   //intializing list to the dimensions of the string's length and the array's size
