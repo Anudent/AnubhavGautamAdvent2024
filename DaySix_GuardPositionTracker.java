@@ -13,13 +13,15 @@ public class DaySix_GuardPositionTracker {
     public static int horizontalDirection = 0;    //does not start left nor right   -1: left     1: right
     public static int verticalDirection = 1;     //starts up, -1: down 1
 
+//    public static FINAL int[][] directions ={ {1,0} , {0,1}, {-1,0}, {0,-1} };
 
     public static void main(String[] args) {
         visitedCoordinates.add((findGuardLocation(data) ) );       //adding to visited coordinates list the first coordinate
         while (canMoveForward()) {
             moveForward();
         }
-        System.out.println("The Guard is out of sight after visiting " + total + " distinct places. ");                          // the loop will end when the guard is off the fileData.txt fileData.txt
+        System.out.println("The Guard is out of sight after visiting " + total + " distinct places. ");
+        // the loop will end when the guard is off the fileData.txt fileData.txt
     }
 
     public static boolean canMoveForward() {   //method that returns a boolean true if the guard moved forward
@@ -31,7 +33,7 @@ public class DaySix_GuardPositionTracker {
         if(condition) {       //to prevent OutOfBoundsError, outOfBounds must be checked first.
             if (data[guardYCoord + verticalDirection][guardXCoord + horizontalDirection].equals("#")) {
                 turnGuard();
-            };    //if next move is an obstacle, turn
+            }    //if next move is an obstacle, turn
         }
         return condition;
     }
@@ -48,9 +50,9 @@ public class DaySix_GuardPositionTracker {
     }
 
     public static void turnGuard(){
-        int tempVar = verticalDirection;               //turning 90 degrees right algorithm
+        int tempVar = Integer.valueOf(verticalDirection);               //turning 90 degrees right algorithm
         verticalDirection = -1 * horizontalDirection;
-        horizontalDirection = tempVar;
+        horizontalDirection = Integer.valueOf(tempVar);
     }
 
 
