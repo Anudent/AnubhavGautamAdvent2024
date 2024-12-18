@@ -15,7 +15,7 @@ public class DaySix_GuardPositionTracker {
 
 
     public static void main(String[] args) {
-        visitedCoordinates.add((findGuardLocation(data) ) );       //adding to visited coordinates list
+        visitedCoordinates.add((findGuardLocation(data) ) );       //adding to visited coordinates list the first coordinate
         while (canMoveForward()) {
             moveForward();
         }
@@ -26,11 +26,12 @@ public class DaySix_GuardPositionTracker {
         //  false if the guard moves off the boundaries
         //  the program changes the guards directions accordingly and adds to the total
 
-        boolean condition = (data.length > guardYCoord + verticalDirection && 0 < guardYCoord + verticalDirection);  //if next move isn't outside boundaries vertically
-        condition = condition || (data[0].length > guardXCoord + horizontalDirection && 0 < guardXCoord + horizontalDirection);    //if next move isn't outside boundaries horizontally
+        boolean condition = (data.length > guardYCoord + verticalDirection &&  guardYCoord + verticalDirection > 0);  //if next move isn't outside boundaries vertically
+        condition = condition && (data[0].length > guardXCoord + horizontalDirection && guardXCoord + horizontalDirection > 0);    //if next move isn't outside boundaries horizontally
         if(condition) {       //to prevent OutOfBoundsError, outOfBounds must be checked first.
-            condition = condition || !data[guardYCoord + verticalDirection][guardXCoord + horizontalDirection].equals("|"); //if next move isnt a wall
-            condition = condition || !data[guardYCoord + verticalDirection][guardXCoord + horizontalDirection].equals("#");    //if next move isn't an obstacle
+            if (data[guardYCoord + verticalDirection][guardXCoord + horizontalDirection].equals("#")) {
+                turnGuard();
+            };    //if next move is an obstacle, turn
         }
         return condition;
     }
@@ -44,12 +45,9 @@ public class DaySix_GuardPositionTracker {
                 visitedCoordinates.add(newGuardLocation);
                 total++;
             }
-
-            turnGuard();
     }
 
     public static void turnGuard(){
-
         int tempVar = verticalDirection;               //turning 90 degrees right algorithm
         verticalDirection = -1 * horizontalDirection;
         horizontalDirection = tempVar;
