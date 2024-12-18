@@ -5,15 +5,17 @@ import java.util.Scanner;
 
 public class Template {
 
+    public static String[][] data = formatFileData(getFileData("src/file.txt"));
 
     public static void main(String[] args){
 
 
+
+
     }
 
-
     // turns filedata Array into a 2d list
-    public String[][] formatFileData(ArrayList<String> fileData){
+    public static String[][] formatFileData(ArrayList<String> fileData){
         String[][] output = new String[fileData.get(0).length()][fileData.size()];   //intializing list to the dimensions of the string's length and the array's size
         for(int eachRow = 0; eachRow < fileData.size(); eachRow++){    //extracting every value in every line
             String line = fileData.get(eachRow);
@@ -23,7 +25,6 @@ public class Template {
         }
         return output;
     }
-
 
     public static ArrayList<String> getFileData(String fileName) {            //retrieving file information as an arrrayList where each element is a line of text
         ArrayList<String> fileData = new ArrayList<String>();
