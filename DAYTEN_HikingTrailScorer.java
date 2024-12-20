@@ -17,8 +17,7 @@ public class DAYTEN_HikingTrailScorer {
 
     public static void main(String[] args){
 
-        ArrayList
-                <int[]> zeroCoordinates = locateAllZeroCoords(data);
+        ArrayList<int[]> zeroCoordinates = locateAllZeroCoords(data);
         int answer = processAll(zeroCoordinates, data);
 
         System.out.println(answer);
@@ -27,32 +26,34 @@ public class DAYTEN_HikingTrailScorer {
 
 
 
-    public int evaluateTrail(int[] coordinates, int[][] directions  ){
+    public int evaluateTrail(int[] coordinates, int[][] directions  ) {
 
         int x = coordinates[1];
         int y = coordinates[0];
         int total = 0;
+        int currentNumber = data[y][x];
+        for (int[] direction : directions) {
 
-        for(int[] direction : directions){
+
+
             int horizontalDirection = direction[1];
             int verticalDirection = direction[0];
-            int currentNumber = data[y][x];
+            int nextXCoordinate = x + horizontalDirection;
+            int nextYCoordinate = y + verticalDirection;
 
-            if(currentNumber != 9) {
-                if(inBounds(coordinate, DIRECTIONS)){
-                    int nextNumber = data[nextYCoordinate][nextXCoordinate];
-                    if(nextNumber == currentNumber + 1 ){
-                        evaluateTrail(new int[] {nextYCoordinate, nextXCoordinate} , directions);
-                    }
+            if (inBounds(new int[]{}, direction) ) {
 
+                nextNumber = data[nextYCoordinate][nextXCoordinate];
+                if( currentNumber ==8) {
+                    total += evaluateTrail(direction, directions);
                 }
 
-
-
-            }
-            else if( currentNumber >= 9){
+                if (nextNumber == currentNumber + 1) {
+                    evaluateTrail(new int[]{nextYCoordinate, nextXCoordinate}, directions);
+                }
+            } else if (next == 9) {
                 return 1;
-            }
+            } else return 0;
         }
     }
     
